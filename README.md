@@ -33,7 +33,7 @@ Build an end-to-end automated deployment system where every GitHub commit trigge
 ```
 # 🚀 Steps Performed
 
-## 1️⃣ Setup Jenkins & GitHub
+## 1️. Setup Jenkins & GitHub
 
 Installed Jenkins on a Windows host and configured required plugins.
 Created a GitHub repository to hold the Node.js application and Jenkinsfile.
@@ -44,24 +44,7 @@ Created a GitHub repository to hold the Node.js application and Jenkinsfile.
 
 
 
-## 2️⃣ Dockerize the Application & Push to Docker Hub
-
-Wrote a lightweight Dockerfile using the node:18-alpine base image.
-Jenkins builds the image on every commit with a unique build tag.
-After successful tests, Jenkins logs in to Docker Hub (credentials stored securely in Jenkins) and pushes the image to the public repository:
-
-📸 Screenshot 2: Successful Docker build
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d2cb208e-c380-48db-b26c-ecda7454e7f5" />
-
-### 🔑 Docker Hub Repository
-
-Public images from this pipeline are available here:
-```bash
-docker.io/deepakjaiswal09/jenkins-demo
-```
-
-
-## 3️⃣ Configure AWS EC2
+## 2. Configure AWS EC2
 
 Created an Ubuntu EC2 instance.
 Added inbound rules for ports 22 (SSH), 80 (HTTP), 443 (HTTPS), and 3000 (App).
@@ -73,7 +56,7 @@ Generated a key pair (.pem) and stored it securely for Jenkins.
 
 
 
-## 4️⃣ Jenkins Pipeline
+## 3. Jenkins Pipeline
 
 Key stages defined in Jenkinsfile:
 Checkout: Pull latest code from GitHub.
@@ -89,7 +72,23 @@ Notify: Publish success/failure message to AWS SNS.
 
 
 
-## 5️⃣ Secure Credentials in Jenkins
+## 4. Dockerize the Application & Push to Docker Hub
+
+Wrote a lightweight Dockerfile using the node:18-alpine base image.
+Jenkins builds the image on every commit with a unique build tag.
+After successful tests, Jenkins logs in to Docker Hub (credentials stored securely in Jenkins) and pushes the image to the public repository:
+
+📸 Screenshot 2: Successful Docker build
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d2cb208e-c380-48db-b26c-ecda7454e7f5" />
+
+### 🔑 Docker Hub Repository
+
+Public images from this pipeline are available here:
+```bash
+docker.io/deepakjaiswal09/jenkins-demo
+```
+
+## 5️. Secure Credentials in Jenkins
 
 Docker Hub: Username + Access Token saved as docker-hub-creds.
 EC2 Key: SSH private key stored as ec2-ssh-key.
@@ -101,7 +100,7 @@ AWS Keys: aws-access-key-id and aws-secret-access-key stored as secrets.
 
 
 
-## 6️⃣ AWS SNS Notifications
+## 6️. AWS SNS Notifications
 
 Created an SNS Topic jenkins-notify.
 Subscribed an email endpoint and confirmed subscription.
@@ -113,7 +112,7 @@ Jenkins pipeline uses the AWS CLI to publish build status.
 
 
 
-## 7️⃣ Final Deployment
+## 7️. Final Deployment
 
 On each commit, Jenkins builds and deploys automatically.
 The app is accessible at:
