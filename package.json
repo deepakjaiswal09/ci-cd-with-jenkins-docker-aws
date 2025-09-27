@@ -1,0 +1,11 @@
+{
+  "name": "jenkins-ci-cd-aws",
+  "version": "1.0.0",
+  "description": "Simple Node app for Jenkins CI/CD demo with Docker and AWS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "dependencies": {}
+}
