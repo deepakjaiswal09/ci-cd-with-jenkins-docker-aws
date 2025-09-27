@@ -41,7 +41,8 @@ Created a GitHub repository to hold the Node.js application and Jenkinsfile.
 📸 Screenshot 1: Jenkins dashboard with job configuration
 
 <img width="1920" height="1080" alt="Screenshot (1076)" src="https://github.com/user-attachments/assets/70e6583f-c80b-476c-b15c-b95e7d7d2002" />
----
+
+
 ## 2️⃣ Dockerize the Application
 
 Wrote a lightweight Dockerfile using node:18-alpine base image.
@@ -50,8 +51,11 @@ Verified local build with docker build and docker run.
 📸 Screenshot 2: Successful local Docker build
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/632c5c3c-769c-4d09-916e-59d2f404d774" />
+
+
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6d64019f-e64e-4bdd-bc7f-ff4b529cb343" />
----
+
+
 ## 3️⃣ Configure AWS EC2
 
 Created an Ubuntu EC2 instance.
@@ -61,7 +65,8 @@ Generated a key pair (.pem) and stored it securely for Jenkins.
 📸 Screenshot 3: EC2 security group inbound rules
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1a5e7ab3-5976-4f55-b39e-5b0e42bff7a8" />
----
+
+
 ## 4️⃣ Jenkins Pipeline
 
 Key stages defined in Jenkinsfile:
@@ -75,7 +80,8 @@ Notify: Publish success/failure message to AWS SNS.
 📸 Screenshot 4: Jenkins pipeline execution view
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b6b4a9e0-a81a-40d7-9a2f-118283e8ee33" />
----
+
+
 ## 5️⃣ Secure Credentials in Jenkins
 
 Docker Hub: Username + Access Token saved as docker-hub-creds.
@@ -85,7 +91,8 @@ AWS Keys: aws-access-key-id and aws-secret-access-key stored as secrets.
 ## 📸 Screenshot 5: Jenkins credentials configuration
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9b418668-c611-4c68-ac68-6e84de0d72db" />
----
+
+
 ## 6️⃣ AWS SNS Notifications
 
 Created an SNS Topic jenkins-notify.
@@ -95,7 +102,8 @@ Jenkins pipeline uses the AWS CLI to publish build status.
 📸 Screenshot 6: Example SNS email notification
 
 <img width="1412" height="519" alt="image" src="https://github.com/user-attachments/assets/ebf124d7-563c-4950-9311-c6e6cfd1db7b" />
----
+
+
 ## 7️⃣ Final Deployment
 
 On each commit, Jenkins builds and deploys automatically.
@@ -105,7 +113,7 @@ http://16.170.215.124/:3000
 ```
 <img width="1919" height="410" alt="image" src="https://github.com/user-attachments/assets/b1dc17be-5eab-43c0-9e5e-f2d0e39578a1" />
 
----
+
 # 🎯 Outcome
 
 Fully automated pipeline from source to production.
