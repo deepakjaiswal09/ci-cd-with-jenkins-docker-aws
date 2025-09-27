@@ -43,17 +43,14 @@ Created a GitHub repository to hold the Node.js application and Jenkinsfile.
 <img width="1920" height="1080" alt="Screenshot (1076)" src="https://github.com/user-attachments/assets/70e6583f-c80b-476c-b15c-b95e7d7d2002" />
 
 
-## 2️⃣ Dockerize the Application
+## 2️⃣ Dockerize the Application & Push to Docker Hub
 
-Wrote a lightweight Dockerfile using node:18-alpine base image.
-Verified local build with docker build and docker run.
+Wrote a lightweight Dockerfile using the node:18-alpine base image.
+Jenkins builds the image on every commit with a unique build tag (<username>/jenkins-demo:<build_number>).
+After successful tests, Jenkins logs in to Docker Hub (credentials stored securely in Jenkins) and pushes the image to the public repository:
 
 📸 Screenshot 2: Successful local Docker build
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/632c5c3c-769c-4d09-916e-59d2f404d774" />
-
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6d64019f-e64e-4bdd-bc7f-ff4b529cb343" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d2cb208e-c380-48db-b26c-ecda7454e7f5" />
 
 
 ## 3️⃣ Configure AWS EC2
@@ -92,6 +89,12 @@ AWS Keys: aws-access-key-id and aws-secret-access-key stored as secrets.
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9b418668-c611-4c68-ac68-6e84de0d72db" />
 
+### 🔑 Docker Hub Repository
+
+Public images from this pipeline are available here:
+```bash
+docker.io/deepakjaiswal09/jenkins-demo
+```
 
 ## 6️⃣ AWS SNS Notifications
 
