@@ -38,7 +38,12 @@ Build an end-to-end automated deployment system where every GitHub commit trigge
 Installed Jenkins on a Windows host and configured required plugins.
 Created a GitHub repository to hold the Node.js application and Jenkinsfile.
 
-📸 Screenshot 1: Jenkins dashboard with job configuration
+📸 Screenshot 1: Setting up the Github through vs code 
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b99f53f7-6ac2-4898-a5f6-1a89dbf094ea" />
+
+
+📸 Screenshot 2: Jenkins dashboard with job configuration
 
 <img width="1920" height="1080" alt="Screenshot (1076)" src="https://github.com/user-attachments/assets/70e6583f-c80b-476c-b15c-b95e7d7d2002" />
 
