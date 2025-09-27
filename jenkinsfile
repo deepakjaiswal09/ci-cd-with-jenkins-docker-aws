@@ -51,14 +51,29 @@ pipeline {
       }
     }
 
-    // ===== No SSH Agent plugin needed: bind key to a file and use ssh -i =====
+    // ===== Fixed Deploy: copy key, harden ACL, ssh, cleanup =====
     stage('Deploy to AWS EC2') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: "${SSH_KEY}",
                                            keyFileVariable: 'SSH_KEYFILE',
                                            usernameVariable: 'SSH_USER')]) {
           bat """
-          ssh -i "%SSH_KEYFILE%" -o StrictHostKeyChecking=no %SSH_USER%@%EC2_HOST% "docker rm -f jenkins-demo || true && docker pull %DOCKER_IMAGE%:%BUILD_NUMBER% && docker run -d -p 3000:3000 --name jenkins-demo %DOCKER_IMAGE%:%BUILD_NUMBER%"
+          setlocal ENABLEEXTENSIONS
+          set "KEY_SRC=%SSH_KEYFILE%"
+          set "KEY_FIXED=%WORKSPACE%\\id_rsa_jenkins_ec2"
+
+          copy /Y "%KEY_SRC%" "%KEY_FIXED%" >NUL
+
+          rem --- Harden permissions for OpenSSH on Windows ---
+          icacls "%KEY_FIXED%" /inheritance:r >NUL
+          icacls "%KEY_FIXED%" /grant:r "%USERNAME%:R" >NUL
+          icacls "%KEY_FIXED%" /grant:r "Administrators:R" >NUL
+          icacls "%KEY_FIXED%" /remove "BUILTIN\\Users" >NUL 2>&1
+
+          ssh -i "%KEY_FIXED%" -o StrictHostKeyChecking=no %SSH_USER%@%EC2_HOST% "docker rm -f jenkins-demo || true && docker pull %DOCKER_IMAGE%:%BUILD_NUMBER% && docker run -d -p 3000:3000 --name jenkins-demo %DOCKER_IMAGE%:%BUILD_NUMBER%"
+
+          del /F /Q "%KEY_FIXED%" >NUL 2>&1
+          endlocal
           """
         }
       }
