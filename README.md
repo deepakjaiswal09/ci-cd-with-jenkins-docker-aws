@@ -47,7 +47,7 @@ Created a GitHub repository to hold the Node.js application and Jenkinsfile.
 ## 2️⃣ Dockerize the Application & Push to Docker Hub
 
 Wrote a lightweight Dockerfile using the node:18-alpine base image.
-Jenkins builds the image on every commit with a unique build tag (<username>/jenkins-demo:<build_number>).
+Jenkins builds the image on every commit with a unique build tag.
 After successful tests, Jenkins logs in to Docker Hub (credentials stored securely in Jenkins) and pushes the image to the public repository:
 
 📸 Screenshot 2: Successful Docker build
