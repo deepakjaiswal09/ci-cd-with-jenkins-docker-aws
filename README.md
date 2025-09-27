@@ -123,7 +123,7 @@ http://16.170.215.124/:3000
 
 
 
-# 🎯 Outcome
+## 🎯 Outcome
 
 Fully automated pipeline from source to production.
 Zero manual intervention required after code push.
@@ -131,13 +131,13 @@ Reusable pipeline template for future microservices.
 
 ---
 
-# ✅ Acknowledgement
+## ✅ Acknowledgement
 
 I successfully completed this DevOps internship project by implementing a production-grade CI/CD pipeline using Jenkins, Docker, GitHub, AWS EC2, and AWS SNS.
 Key learnings include secure credential management, automated deployments, cloud networking (security groups, key pairs), and event-driven notifications.
 
 
-# 🤝 Contributing
+## 🤝 Contributing
 
 Contributions to improve or enhance this project are always welcome.
 
