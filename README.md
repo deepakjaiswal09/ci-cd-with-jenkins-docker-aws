@@ -86,6 +86,10 @@ After successful tests, Jenkins logs in to Docker Hub (credentials stored secure
 📸 Screenshot 2: Successful Docker build
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d2cb208e-c380-48db-b26c-ecda7454e7f5" />
 
+📸 docker ps : interface of ec2 cli :
+<img width="1897" height="321" alt="Screenshot 2025-09-27 172733" src="https://github.com/user-attachments/assets/f78efc44-2f2c-45be-b3e6-212315ab9b42" />
+
+
 ### 🔑 Docker Hub Repository
 
 Public images from this pipeline are available here:
@@ -114,6 +118,10 @@ Jenkins pipeline uses the AWS CLI to publish build status.
 📸 Screenshot 6: Example SNS email notification
 
 <img width="1412" height="519" alt="image" src="https://github.com/user-attachments/assets/ebf124d7-563c-4950-9311-c6e6cfd1db7b" />
+
+📸 Aws SNS Configuration :
+<img width="1920" height="1080" alt="Screenshot (1075)" src="https://github.com/user-attachments/assets/2c913cab-1106-407b-8d1a-19a67a8ad30c" />
+
 
 
 
