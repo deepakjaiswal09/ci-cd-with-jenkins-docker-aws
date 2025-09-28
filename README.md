@@ -120,6 +120,7 @@ Jenkins pipeline uses the AWS CLI to publish build status.
 <img width="1412" height="519" alt="image" src="https://github.com/user-attachments/assets/ebf124d7-563c-4950-9311-c6e6cfd1db7b" />
 
 📸 Aws SNS Configuration :
+
 <img width="1920" height="1080" alt="Screenshot (1075)" src="https://github.com/user-attachments/assets/2c913cab-1106-407b-8d1a-19a67a8ad30c" />
 
 
