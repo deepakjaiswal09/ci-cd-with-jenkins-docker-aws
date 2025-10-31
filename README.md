@@ -11,14 +11,14 @@ This system ensures every code change is automatically built, tested, containeri
 ## 📌 Real-World Problem Statement
 
 In a typical E-Commerce platform, development teams frequently push updates:
--New product catalogues
--Updated payment logic
--Promotional banners or offers
--Fixes for checkout or user authentication
--Manually deploying these updates to production causes:
--Downtime during releases
--Version mismatches between servers
--Higher risk of deployment failures
+- New product catalogues
+- Updated payment logic
+- Promotional banners or offers
+- Fixes for checkout or user authentication
+- Manually deploying these updates to production causes:
+- Downtime during releases
+- Version mismatches between servers
+- Higher risk of deployment failures
 
 ## 💡 Solution
 This project builds an automated CI/CD pipeline that ensures every commit triggers:
