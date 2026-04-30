@@ -9,7 +9,7 @@ pipeline {
     // EC2 deploy
     EC2_USER = "ubuntu"
     EC2_HOST = "16.170.215.124"
-    SSH_KEY  = "ec2-ssh-key"              // Jenkins credential ID: SSH Username with private key (username=ubuntu)
+    SSH_KEY  = "ec2-ssh-key"              // Jenkins credential ID: SSH Username with private key (username=ubuntu) add
 
     // SNS notify
     AWS_REGION = "eu-north-1"
