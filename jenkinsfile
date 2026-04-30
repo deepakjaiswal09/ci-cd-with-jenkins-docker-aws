@@ -6,9 +6,9 @@ pipeline {
     DOCKER_CREDS = "docker-hub-creds"
   }
 
-  triggers {
-    githubPush()   // 🔥 webhook trigger
-  }
+  // triggers {
+  //   githubPush()   // 🔥 webhook trigger
+  // }
 
   stages {
 
