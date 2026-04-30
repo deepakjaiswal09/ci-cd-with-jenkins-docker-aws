@@ -15,7 +15,7 @@ pipeline {
     stage('Checkout') {
       steps {
         checkout([$class: 'GitSCM',
-          branches: [[name: '*/testing']],   // 👈 use your testing branch 
+          branches: [[name: '*/testing']],   // 👈 use your testing branch ok
           userRemoteConfigs: [[
             url: 'https://github.com/deepakjaiswal09/ci-cd-with-jenkins-docker-aws'
           ]]
