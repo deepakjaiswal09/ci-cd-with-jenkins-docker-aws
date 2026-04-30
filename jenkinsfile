@@ -2,108 +2,63 @@ pipeline {
   agent any
 
   environment {
-    // Docker
     DOCKER_IMAGE = "deepakjaiswal09/jenkins-demo"
-    DOCKER_CREDS = "docker-hub-creds"     // Jenkins credential ID (Username+Password for Docker Hub)
+    DOCKER_CREDS = "docker-hub-creds"
+  }
 
-    // EC2 deploy
-    EC2_USER = "ubuntu"
-    EC2_HOST = "16.170.215.124"
-    SSH_KEY  = "ec2-ssh-key"              // Jenkins credential ID: SSH Username with private key (username=ubuntu)
-
-    // SNS notify
-    AWS_REGION = "eu-north-1"
-    SNS_ARN    = "arn:aws:sns:eu-north-1:448049822166:jenkins-notify"
+  triggers {
+    githubPush()   // 🔥 webhook trigger
   }
 
   stages {
+
     stage('Checkout') {
       steps {
         checkout([$class: 'GitSCM',
-          branches: [[name: '*/main']],
-          userRemoteConfigs: [[url: 'https://github.com/deepakjaiswal09/ci-cd-with-jenkins-docker-aws']]
+          branches: [[name: '*/testing']],   // 👈 use your testing branch
+          userRemoteConfigs: [[
+            url: 'https://github.com/deepakjaiswal09/ci-cd-with-jenkins-docker-aws'
+          ]]
         ])
+      }
+    }
+
+    stage('Verify Docker') {
+      steps {
+        bat "docker version"
       }
     }
 
     stage('Build Docker Image') {
       steps {
-        bat "docker build -t %DOCKER_IMAGE%:%BUILD_NUMBER% ."
+        bat """
+        docker build -t %DOCKER_IMAGE%:%BUILD_NUMBER% .
+        docker tag %DOCKER_IMAGE%:%BUILD_NUMBER% %DOCKER_IMAGE%:latest
+        """
       }
     }
 
     stage('Test') {
       steps {
+        bat "npm install"
         bat "npm test"
       }
     }
 
     stage('Push to DockerHub') {
       steps {
-        withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDS}",
-                                          usernameVariable: 'DOCKER_USER',
-                                          passwordVariable: 'DOCKER_PASS')]) {
+        withCredentials([usernamePassword(
+          credentialsId: "${DOCKER_CREDS}",
+          usernameVariable: 'DOCKER_USER',
+          passwordVariable: 'DOCKER_PASS'
+        )]) {
           bat """
           echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
           docker push %DOCKER_IMAGE%:%BUILD_NUMBER%
+          docker push %DOCKER_IMAGE%:latest
+          docker logout
           """
         }
-      }
-    }
-
-    // ===== Fixed Deploy: copy key, harden ACL, ssh, cleanup =====
-    stage('Deploy to AWS EC2') {
-      steps {
-        withCredentials([sshUserPrivateKey(credentialsId: "${SSH_KEY}",
-                                           keyFileVariable: 'SSH_KEYFILE',
-                                           usernameVariable: 'SSH_USER')]) {
-          bat """
-          setlocal ENABLEEXTENSIONS
-          set "KEY_SRC=%SSH_KEYFILE%"
-          set "KEY_FIXED=%WORKSPACE%\\id_rsa_jenkins_ec2"
-
-          copy /Y "%KEY_SRC%" "%KEY_FIXED%" >NUL
-
-          rem --- Harden permissions for OpenSSH on Windows ---
-          icacls "%KEY_FIXED%" /inheritance:r >NUL
-          icacls "%KEY_FIXED%" /grant:r "%USERNAME%:R" >NUL
-          icacls "%KEY_FIXED%" /grant:r "Administrators:R" >NUL
-          icacls "%KEY_FIXED%" /remove "BUILTIN\\Users" >NUL 2>&1
-
-          ssh -i "%KEY_FIXED%" -o StrictHostKeyChecking=no %SSH_USER%@%EC2_HOST% "docker rm -f jenkins-demo || true && docker pull %DOCKER_IMAGE%:%BUILD_NUMBER% && docker run -d -p 3000:3000 --name jenkins-demo %DOCKER_IMAGE%:%BUILD_NUMBER%"
-
-          del /F /Q "%KEY_FIXED%" >NUL 2>&1
-          endlocal
-          """
-        }
-      }
-    }
-
-    stage('Notify Success') {
-      steps {
-        withCredentials([
-          string(credentialsId: 'aws-access-key-id',     variable: 'AWS_ACCESS_KEY_ID'),
-          string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
-        ]) {
-          bat """
-          aws configure set region %AWS_REGION%
-          aws sns publish --topic-arn %SNS_ARN% --message "Build #%BUILD_NUMBER% succeeded: Image pushed & deployed to EC2 (%EC2_HOST%)." --subject "Jenkins Success: Build #%BUILD_NUMBER%"
-          """
-        }
-      }
-    }
-  }
-
-  post {
-    failure {
-      withCredentials([
-        string(credentialsId: 'aws-access-key-id',     variable: 'AWS_ACCESS_KEY_ID'),
-        string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
-      ]) {
-        bat """
-        aws configure set region %AWS_REGION%
-        aws sns publish --topic-arn %SNS_ARN% --message "Build #%BUILD_NUMBER% failed. Check Jenkins logs." --subject "Jenkins FAILED: Build #%BUILD_NUMBER%"
-        """
       }
     }
   }
