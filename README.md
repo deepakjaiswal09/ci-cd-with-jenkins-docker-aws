@@ -8,6 +8,10 @@ GitHub → Jenkins → Docker Hub → AWS EC2, with real-time deployment notific
 The pipeline is designed to address a common business challenge faced by online retail platforms — frequent feature updates, zero downtime, and rapid deployment cycles for new product listings, offers, and checkout improvements.
 This system ensures every code change is automatically built, tested, containerized, deployed, and notified — just like modern e-commerce companies such as Flipkart or Amazon handle continuous delivery.
 
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/fc432670-200b-48a0-940a-c69f1103e38d" />
+
+
+
 ## 📌 Real-World Problem Statement
 
 In a typical E-Commerce platform, development teams frequently push updates:
